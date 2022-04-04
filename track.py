@@ -22,31 +22,34 @@ polygons = [1]
 polygons[0] = np.array([[1,200],[703,200],[703,225],[1,225]])
 all_objects = []
 car=0
+# van=0
 motorcycle=0
 bus=0
 truck=0
 
 
 # def refresh_stats(img):
-#     global car, motorcycle, bus, truck
+#     global car, van, motorcycle, bus, truck
 #     font = cv2.FONT_HERSHEY_PLAIN
 #     line = cv2.LINE_AA
-#     stat_text = 'cars: {}, motorbikes: {}, trucks: {}, bus: {}'.format(car, motorcycle, bus, truck)
+#     stat_text = 'cars: {}, vans: {}, motorcycles: {}, buses: {}, trucks: {}'.format(car, van, motorcycle, bus, truck)
 #     # t_size = cv2.getTextSize(stat_text, font, 2, 3)[0]
 #     cv2.rectangle(img, (5,25), (700,55), (255,255,255), cv2.FILLED)
 #     cv2.putText(img, stat_text, (11, 50), font, 2.0, (0, 0, 0), 2, line)
 #     return img
 
 def refresh_stats(img):
-    global car, motorcycle, bus, truck
+    global car, motorcycle, bus, truck  # global car, van, motorcycle, bus, truck
     font = cv2.FONT_HERSHEY_PLAIN
     line = cv2.LINE_AA
     car_stats = 'car: {}'.format(car)
+    # van_stats = 'van: {}'.format(van)
     motorbike_stats= 'motorcycle: {}'.format(motorcycle)
     bus_stats= 'bus: {}'.format(bus)
     truck_stats = 'truck: {}'.format(truck)
     cv2.rectangle(img, (5,25), (260,145), (255,255,255), cv2.FILLED)
     cv2.putText(img, car_stats, (11, 50), font, 2.0, (0, 0, 0), 2, line)
+    # cv2.putText(img, van_stats, (11, 80), font, 2.0, (0, 0, 0), 2, line)
     cv2.putText(img, motorbike_stats, (11, 80), font, 2.0, (0, 0, 0), 2, line)
     cv2.putText(img, bus_stats, (11, 110), font, 2.0, (0, 0, 0), 2, line)
     cv2.putText(img, truck_stats, (11, 140), font, 2.0, (0, 0, 0), 2, line)
@@ -79,7 +82,7 @@ def compute_color_for_labels(label):
 
 def draw_boxes(xcl, ycl, conf, img, name, bbox, identities=None, offset=(0, 0)):
     global all_objects
-    global car,motorcycle,bus,truck
+    global car,motorcycle,bus,truck  # global car,van,motorcycle,bus,truck
     for i, (box, xc, yc) in enumerate(zip(bbox, xcl, ycl)):
         x1, y1, x2, y2 = [int(i) for i in box]
         x1 += offset[0]
@@ -92,13 +95,15 @@ def draw_boxes(xcl, ycl, conf, img, name, bbox, identities=None, offset=(0, 0)):
         label = '{}{:d}'.format("", id)
         print("")
         #print("For ID:", label, "The vehicle is:", name, "The center coordinate are (%d, %d)" % (xc, yc))
-        
-        
+
+
         dict_all_objects = dict(all_objects)
         if label not in dict_all_objects and (cv2.pointPolygonTest(polygons[0], (xc,yc), False)>0):
             all_objects.append([label,name])
             if name=='car':
                 car+= 1
+            # if name=='van':
+            #     van+=1
             if name=='motorcycle':
                 motorcycle+=1
             if name=='bus':
@@ -200,6 +205,7 @@ def detect(opt, save_img=False):
             cv2.line(im0, (0, 200), (640, 200), (0, 0, 255), 3)  # line to count number of vehicles
             # cv2.rectangle(im0, (1,200), (703,220), (255,255,255), 1) # draw polygon where counting actually happens
             print("The numbers for cars, motorbikes, bus and truck are: %d, %d, %d, %d" % (car, motorcycle, bus, truck))
+            # print("The numbers for cars, vans, motorbikes, bus and truck are: %d, %d, %d, %d, %d" % (car, van, motorcycle, bus, truck))
             refresh_stats(im0)
 
             if det is not None and len(det):
@@ -296,10 +302,10 @@ def detect(opt, save_img=False):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--weights', type=str,
-                        default='yolov5x.pt', help='model.pt path')
+                        default='yolov5s.pt', help='model.pt path')
     # file/folder, 0 for webcam
     parser.add_argument('--source', type=str,
-                        default='inference/images', help='source')
+                        default='data/vehicle_test_images', help='source')
     parser.add_argument('--output', type=str, default='runs/detect',
                         help='output folder')  # output folder
     parser.add_argument('--img-size', type=int, default=640,
