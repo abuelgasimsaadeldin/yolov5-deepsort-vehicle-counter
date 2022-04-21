@@ -46,11 +46,11 @@ def refresh_stats(img):
     motorbike_stats= 'motorcycle: {}'.format(motorcycle)
     bus_stats= 'bus: {}'.format(bus)
     truck_stats = 'truck: {}'.format(truck)
-    cv2.rectangle(img, (5,25), (260,145), (255,255,255), cv2.FILLED)
-    cv2.putText(img, car_stats, (11, 50), font, 2.0, (0, 0, 0), 2, line)
-    cv2.putText(img, motorbike_stats, (11, 80), font, 2.0, (0, 0, 0), 2, line)
-    cv2.putText(img, bus_stats, (11, 110), font, 2.0, (0, 0, 0), 2, line)
-    cv2.putText(img, truck_stats, (11, 140), font, 2.0, (0, 0, 0), 2, line)
+    cv2.rectangle(img, (5,25), (260,145), (0,0,0), cv2.FILLED)
+    cv2.putText(img, car_stats, (11, 50), font, 2.0, (255, 255, 255), 2, line)
+    cv2.putText(img, motorbike_stats, (11, 80), font, 2.0, (255, 255, 255), 2, line)
+    cv2.putText(img, bus_stats, (11, 110), font, 2.0, (255, 255, 255), 2, line)
+    cv2.putText(img, truck_stats, (11, 140), font, 2.0, (255, 255, 255), 2, line)
     return img
 
 
@@ -198,8 +198,8 @@ def detect(opt, save_img=False):
             s += '%gx%g ' % img.shape[2:]  # print string
             save_path = str(Path(out) / Path(p).name)
 
-            cv2.line(im0, (0, 200), (640, 200), (0, 0, 255), 3)  # line to count number of vehicles
-            # cv2.rectangle(im0, (1,200), (703,220), (255,255,255), 1) # draw polygon where counting actually happens
+            # cv2.line(im0, (0, 200), (640, 200), (0, 0, 255), 3)  # line to count number of vehicles
+            cv2.rectangle(im0, (1,200), (703,225), (0,0,255), 1) # draw polygon where counting actually happens
             print("The numbers for cars, motorbikes, bus and truck are: %d, %d, %d, %d" % (car, motorcycle, bus, truck))
             refresh_stats(im0)
 
