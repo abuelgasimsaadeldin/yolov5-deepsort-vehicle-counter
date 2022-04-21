@@ -76,6 +76,15 @@ def plot_one_box(x, img, color=None, label=None, line_thickness=3):
 #     thickness = 2
 #     cv2.putText(img, label, org, font, fontScale, color, thickness, cv2.LINE_AA)
 
+def show_fps(img, fps):
+    """ Draw fps number on top left corner of image """
+    font = cv2.FONT_HERSHEY_PLAIN
+    line = cv2.LINE_AA
+    fps_text = 'FPS: {}'.format(fps)
+    cv2.putText(img, fps_text, (610, 20), font, 1.0, (32, 32, 32), 2, line)
+    cv2.putText(img, fps_text, (611, 20), font, 1.0, (240, 240, 240), 1, line)
+    return img
+
 def plot_counter(img, label, org):
     font = cv2.FONT_HERSHEY_SIMPLEX
     fontScale = 1
