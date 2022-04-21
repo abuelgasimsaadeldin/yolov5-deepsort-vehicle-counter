@@ -23,7 +23,6 @@ polygons = [1]
 polygons[0] = np.array([[1,200],[703,200],[703,225],[1,225]])
 all_objects = []
 car=0
-# van=0
 motorcycle=0
 bus=0
 truck=0
@@ -44,13 +43,11 @@ def refresh_stats(img):
     font = cv2.FONT_HERSHEY_PLAIN
     line = cv2.LINE_AA
     car_stats = 'car: {}'.format(car)
-    # van_stats = 'van: {}'.format(van)
     motorbike_stats= 'motorcycle: {}'.format(motorcycle)
     bus_stats= 'bus: {}'.format(bus)
     truck_stats = 'truck: {}'.format(truck)
     cv2.rectangle(img, (5,25), (260,145), (255,255,255), cv2.FILLED)
     cv2.putText(img, car_stats, (11, 50), font, 2.0, (0, 0, 0), 2, line)
-    # cv2.putText(img, van_stats, (11, 80), font, 2.0, (0, 0, 0), 2, line)
     cv2.putText(img, motorbike_stats, (11, 80), font, 2.0, (0, 0, 0), 2, line)
     cv2.putText(img, bus_stats, (11, 110), font, 2.0, (0, 0, 0), 2, line)
     cv2.putText(img, truck_stats, (11, 140), font, 2.0, (0, 0, 0), 2, line)
@@ -103,8 +100,6 @@ def draw_boxes(xcl, ycl, conf, img, name, bbox, identities=None, offset=(0, 0)):
             all_objects.append([label,name])
             if name=='car':
                 car+= 1
-            # if name=='van':
-            #     van+=1
             if name=='motorcycle':
                 motorcycle+=1
             if name=='bus':
@@ -206,7 +201,6 @@ def detect(opt, save_img=False):
             cv2.line(im0, (0, 200), (640, 200), (0, 0, 255), 3)  # line to count number of vehicles
             # cv2.rectangle(im0, (1,200), (703,220), (255,255,255), 1) # draw polygon where counting actually happens
             print("The numbers for cars, motorbikes, bus and truck are: %d, %d, %d, %d" % (car, motorcycle, bus, truck))
-            # print("The numbers for cars, vans, motorbikes, bus and truck are: %d, %d, %d, %d, %d" % (car, van, motorcycle, bus, truck))
             refresh_stats(im0)
 
             if det is not None and len(det):
