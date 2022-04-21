@@ -265,9 +265,10 @@ def detect(opt, save_img=False):
             # Print time (inference + NMS)
             #print('%sDone. (%.3fs)' % (s, t2 - t1))
             print('Done. (%.3fs)' % (t2 - t1))
-            fps = 1/(t2-t1)
-            fps = "{:.2f}".format(fps)
-            show_fps(im0, fps)
+            if t2-t1 != 0:
+                fps = 1/(t2-t1)
+                fps = "{:.2f}".format(fps)
+                show_fps(im0, fps)
 
             # Stream results
             if view_img:
