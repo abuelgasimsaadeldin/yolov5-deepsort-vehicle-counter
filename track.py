@@ -20,7 +20,8 @@ from utils.plots import show_fps
 
 import numpy as np
 polygons = [1]
-polygons[0] = np.array([[1,200],[703,200],[703,225],[1,225]])
+polygons[0] = np.array([[1,200],[703,200],[703,225],[1,225]])  # live.mp4
+# polygons[0] = np.array([[1,625],[1950,625],[1950,620],[1,620]])  # car.mp4
 all_objects = []
 car=0
 motorcycle=0
@@ -199,7 +200,8 @@ def detect(opt, save_img=False):
             save_path = str(Path(out) / Path(p).name)
 
             # cv2.line(im0, (0, 200), (640, 200), (0, 0, 255), 3)  # line to count number of vehicles
-            cv2.rectangle(im0, (1,200), (703,225), (0,0,255), 1) # draw polygon where counting actually happens
+            cv2.rectangle(im0, (1,200), (703,225), (0,0,255), 1) # draw polygon where counting actually happens (live)
+            # cv2.rectangle(im0, (1, 600), (1950, 625), (0, 0, 255), 2)  # draw polygon Car.mp4
             print("The numbers for cars, motorbikes, bus and truck are: %d, %d, %d, %d" % (car, motorcycle, bus, truck))
             refresh_stats(im0)
 

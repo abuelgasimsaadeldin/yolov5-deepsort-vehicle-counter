@@ -81,8 +81,10 @@ def show_fps(img, fps):
     font = cv2.FONT_HERSHEY_PLAIN
     line = cv2.LINE_AA
     fps_text = 'FPS: {}'.format(fps)
-    cv2.putText(img, fps_text, (610, 20), font, 1.0, (32, 32, 32), 2, line)
-    cv2.putText(img, fps_text, (611, 20), font, 1.0, (240, 240, 240), 1, line)
+    cv2.putText(img, fps_text, (610, 20), font, 1.0, (32, 32, 32), 2, line)  # live.mp4
+    cv2.putText(img, fps_text, (611, 20), font, 1.0, (240, 240, 240), 1, line)  # live.mp4
+    # cv2.putText(img, fps_text, (1800, 20), font, 1.0, (32, 32, 32), 2, line)  # car.mp4
+    # cv2.putText(img, fps_text, (1801, 20), font, 1.0, (240, 240, 240), 1, line)  # car.mp4
     return img
 
 def plot_counter(img, label, org):
