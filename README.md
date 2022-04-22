@@ -28,7 +28,7 @@ $ ./install_torch.sh
 ```bash
 $ wget https://github.com/Qengineering/Install-OpenCV-Jetson-Nano/raw/main/OpenCV-4-5-5.sh
 $ sudo chmod 755 ./OpenCV-4-5-5.sh
-$ ./OpenCV-4-5-x.sh
+$ ./OpenCV-4-5-5.sh
 ```
 
 #### Install requirements
