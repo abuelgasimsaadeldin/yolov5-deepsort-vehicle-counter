@@ -2,7 +2,18 @@
 
 This system is able to detect and classify vehicles in 4 different classes namely *car*, *motorcycle*, *bus* and *truck* and count the total number of vehicles detected in each of those classes.
 
+### SWAP Jetson Nano to Free Space
+```bash
+$ sudo systemctl disable nvzramconfig  
+$ sudo fallocate -l 4G /mnt/4GB.swap  
+$ sudo chmod 600 /mnt/4GB.swap  
+$ sudo mkswap /mnt/4GB.swap  
+$ sudo su  
+$ echo "/mnt/4GB.swap swap swap defaults 0 0" >> /etc/fstab  
+$ exit  
 
+REBOOT!   
+```
 
 ### Requirements
 
