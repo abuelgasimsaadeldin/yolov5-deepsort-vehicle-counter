@@ -8,7 +8,22 @@ This system is able to detect and classify vehicles in 4 different classes namel
 
 Python 3.8 or later with all [requirements.txt](requirements.txt) dependencies installed, including torch>=1.7 . To install run:
 
+#### Install torch and torchvision libraries
+```bash
+$ ./install_torch.sh
+```
+
+#### Install OpenCV on Jetson Nano
+```bash
+$ wget https://github.com/Qengineering/Install-OpenCV-Jetson-Nano/raw/main/OpenCV-4-5-5.sh
+$ sudo chmod 755 ./OpenCV-4-5-5.sh
+$ ./OpenCV-4-5-x.sh
+```
+
+#### Install requirements
+```bash
 $ pip install -r requirements.txt
+```
 
 ### Inference
 
