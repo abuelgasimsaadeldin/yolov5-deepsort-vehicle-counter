@@ -21,7 +21,8 @@ from utils.plots import show_fps
 import numpy as np
 polygons = [1]
 polygons[0] = np.array([[1,200],[703,200],[703,225],[1,225]])  # live.mp4
-# polygons[0] = np.array([[1,625],[1950,625],[1950,620],[1,620]])  # car.mp4
+# polygons[0] = np.array([[1,625],[1950,625],[1950,620],[1,620]])  # cars.mp4
+# polygons[0] = np.array([[1,300],[800,300],[1,335],[800,335]])  # 5.mp4
 all_objects = []
 car=0
 motorcycle=0
@@ -110,12 +111,10 @@ def draw_boxes(xcl, ycl, conf, img, name, bbox, identities=None, offset=(0, 0)):
 
         # displaying bounding boxes & names
         cv2.rectangle(img, (x1, y1), (x2, y2), color, 3)
-        #t_size = cv2.getTextSize(name, cv2.FONT_HERSHEY_PLAIN, 2, 2)[0]  # get size of name
-        #t_size = cv2.getTextSize(name + "-" + label, cv2.FONT_HERSHEY_PLAIN, 2, 2)[0]  # get size of name+labels
-        # cv2.rectangle(
-        #     img, (x1, y1), (x1 + t_size[0] + 3, y1 + t_size[1] + 4), color, -1)
-        # cv2.putText(img, name, (x1, y1 +
-        #                          t_size[1] + 4), cv2.FONT_HERSHEY_PLAIN, 2, [255, 255, 255], 2)
+        # t_size = cv2.getTextSize(name, cv2.FONT_HERSHEY_PLAIN, 2, 2)[0]  # get size of name
+        # t_size = cv2.getTextSize(name + "-" + label, cv2.FONT_HERSHEY_PLAIN, 2, 2)[0]  # get size of name+labels
+        # cv2.rectangle(img, (x1, y1), (x1 + t_size[0] + 3, y1 + t_size[1] + 4), color, -1)
+        # cv2.putText(img, name + '' + label, (x1, y1 + t_size[1] + 4), cv2.FONT_HERSHEY_PLAIN, 2, [255, 255, 255], 2)
 
         cv2.circle(img, (xc, yc), 4, color, -1)
     return img
@@ -200,8 +199,9 @@ def detect(opt, save_img=False):
             save_path = str(Path(out) / Path(p).name)
 
             # cv2.line(im0, (0, 200), (640, 200), (0, 0, 255), 3)  # line to count number of vehicles
-            cv2.rectangle(im0, (1,200), (703,225), (0,0,255), 1) # draw polygon where counting actually happens (live)
+            cv2.rectangle(im0, (1,200), (703,225), (0,0,255), 1)  # draw polygon where counting actually happens (live)
             # cv2.rectangle(im0, (1, 600), (1950, 625), (0, 0, 255), 2)  # draw polygon Car.mp4
+            # cv2.rectangle(im0, (1, 300), (800, 335), (0, 0, 255), 1)  # draw polygon 5.mp4
             print("The numbers for cars, motorbikes, bus and truck are: %d, %d, %d, %d" % (car, motorcycle, bus, truck))
             refresh_stats(im0)
 
