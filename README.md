@@ -31,7 +31,7 @@ $ sudo chmod 755 ./OpenCV-4-5-5.sh
 $ ./OpenCV-4-5-5.sh
 ```
 
-#### Install requirements
+#### Install requirements (Only this step required for running on PC)
 ```bash
 $ pip install -r requirements.txt
 ```
