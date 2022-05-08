@@ -51,4 +51,5 @@ $ python track.py --source data/vehicle_test_videos/live.mp4
 
 ## Live Setup
 
-![image](https://user-images.githubusercontent.com/68045710/167283814-70fdf875-effe-4849-9bb7-5356302c54a2.png)
+![image](https://user-images.githubusercontent.com/68045710/167283855-07b7c517-8e57-4c3f-adb1-8476ae114a20.png)
+
