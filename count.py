@@ -55,7 +55,7 @@ def detect(save_img=False):
     # Get names and colors
     names = model.module.names if hasattr(model, 'module') else model.names
     #colors = [[random.randint(0, 255) for _ in range(3)] for _ in names]
-    colors = {2: (255, 51, 51), 3: (51, 102, 0), 5: (102, 0, 204), 7: (51, 153, 255)}
+    colors = {0: (255, 51, 51), 1: (51, 102, 0), 2: (102, 0, 204), 3: (51, 153, 255)}
 
     # Run inference
     if device.type != 'cpu':
@@ -174,7 +174,7 @@ if __name__ == '__main__':
     parser.add_argument('--view-img', action='store_true', help='display results')
     parser.add_argument('--save-txt', action='store_true', help='save results to *.txt')
     parser.add_argument('--save-conf', action='store_true', help='save confidences in --save-txt labels')
-    parser.add_argument('--classes', default=[2, 3, 5, 7], nargs='+', type=int, help='filter by class: --class 0, or --class 0 2 3')
+    parser.add_argument('--classes', default=[0, 1, 2, 3], nargs='+', type=int, help='filter by class: --class 0, or --class 0 2 3')
     parser.add_argument('--agnostic-nms', action='store_true', help='class-agnostic NMS')
     parser.add_argument('--augment', action='store_true', help='augmented inference')
     parser.add_argument('--update', action='store_true', help='update all models')
