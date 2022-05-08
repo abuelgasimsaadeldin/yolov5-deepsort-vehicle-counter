@@ -1,8 +1,9 @@
 ## Vehicle Localization and Counting
 
-This system is able to detect and classify vehicles in 4 different classes namely *car*, *motorcycle*, *bus* and *truck* and count the total number of vehicles detected in each of those classes.
+This system is able to detect and classify 4 different classes of vehicles including; *car*, *motorcycle*, *bus* and *truck* and count the total number of vehicles in each of those classes as they pass through a virtual polygon area.
 
-### SWAP Jetson Nano to Free Space
+## Steps to Setup on Nvidia Jetson Nano
+### 1) SWAP Jetson Nano to Free Space
 ```bash
 $ sudo systemctl disable nvzramconfig  
 $ sudo fallocate -l 4G /mnt/4GB.swap  
@@ -15,28 +16,24 @@ $ exit
 REBOOT!   
 ```
 
-### Requirements
-
-Python 3.8 or later with all [requirements.txt](requirements.txt) dependencies installed, including torch>=1.7 . To install run:
-
-#### Install torch and torchvision libraries
+### 2) Install torch and torchvision libraries
 ```bash
 $ ./install_torch.sh
 ```
 
-#### Install OpenCV on Jetson Nano
+### 3) Install OpenCV
 ```bash
 $ wget https://github.com/Qengineering/Install-OpenCV-Jetson-Nano/raw/main/OpenCV-4-5-5.sh
 $ sudo chmod 755 ./OpenCV-4-5-5.sh
 $ ./OpenCV-4-5-5.sh
 ```
 
-#### Install requirements (Only this step required for running on PC)
+### 4) Install requirements (only this step required for running on PC)
 ```bash
 $ pip install -r requirements.txt
 ```
 
-### Inference
+## Run Inference
 
 *count.py*: Detects and counts the number of vehicles detected in each frame and displays it on the image window. (suitable for images)   
 
@@ -51,6 +48,8 @@ $ python track.py --source data/vehicle_test_videos/live.mp4
 ```
 
 ## Results
-### count.py
+### Track.py
+![image](https://user-images.githubusercontent.com/68045710/167283166-e9570ee6-5516-4835-b7f3-4ea148430eff.png)
 
-![1](https://user-images.githubusercontent.com/68045710/111742863-bf097380-88c3-11eb-9003-910896bf82ce.jpg)
+![image](https://user-images.githubusercontent.com/68045710/167283114-53de6332-b88f-4446-b2ec-9c43f3182deb.png)
+
