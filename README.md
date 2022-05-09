@@ -1,4 +1,4 @@
-## Vehicle Localization and Counting
+## Vehicle Detection, Tracking and Counting
 
 This system is able to detect and classify 4 different classes of vehicles including; *car*, *motorcycle*, *bus* and *truck* and count the number of vehicles in each classes as they pass through a virtual polygon area.
 
@@ -36,14 +36,19 @@ $ pip install -r requirements.txt
 ```
 
 ## Run Inference
+*detect.py*: Detects vehicles present in each frame in a video and displays the results. (suitable for videos)   
 
-*count.py*: Detects and counts the number of vehicles detected in each frame and displays it on the image window. (suitable for images)   
+```bash
+$ python detect.py --source data/vehicle_test_videos/live.mp4
+```
+
+*count.py*: Detects and counts the number of vehicles present in an images and displays the results. (suitable for images)   
 
 ```bash
 $ python count.py --source data/vehicle_test_images/* 
 ```
 
-*track.py*: Detects and tracks each vehicle present in the video frame providing it with a unique id number for tracking. (suitable for videos)
+*track.py*: Detects, tracks and counts the number of vehicles as they cross through a virtual polygon area. (suitable for videos)
  
  ```bash
 $ python track.py --source data/vehicle_test_videos/live.mp4
