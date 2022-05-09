@@ -289,7 +289,7 @@ def detect(opt, save_img=False):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--weights', type=str, default='yolov5s.pt', help='model.pt path')
+    parser.add_argument('--weights', type=str, default='vehicles.pt', help='model.pt path')
     # file/folder, 0 for webcam
     parser.add_argument('--source', type=str, default='data/vehicle_test_images', help='source')
     parser.add_argument('--output', type=str, default='runs/result', help='output folder')  # output folder
