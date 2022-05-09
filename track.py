@@ -1,4 +1,5 @@
 import sys
+
 sys.path.insert(0, './yolov5')
 
 from utils.datasets import LoadImages, LoadStreams
@@ -17,10 +18,11 @@ import torch
 import torch.backends.cudnn as cudnn
 from utils.plots import show_fps
 
-
 import numpy as np
+
 polygons = [1]
 polygons[0] = np.array([[1, 200], [703, 200], [703, 225], [1, 225]])  # live.mp4
+# polygons[0] = np.array([[1, 300], [800, 300], [1, 335], [800, 335]])  # highway.mp4
 all_objects = []
 car = 0
 motorcycle = 0
@@ -28,25 +30,15 @@ bus = 0
 truck = 0
 
 
-# def refresh_stats(img):
-#     global car, van, motorcycle, bus, truck
-#     font = cv2.FONT_HERSHEY_PLAIN
-#     line = cv2.LINE_AA
-#     stat_text = 'cars: {}, vans: {}, motorcycles: {}, buses: {}, trucks: {}'.format(car, van, motorcycle, bus, truck)
-#     # t_size = cv2.getTextSize(stat_text, font, 2, 3)[0]
-#     cv2.rectangle(img, (5,25), (700,55), (255,255,255), cv2.FILLED)
-#     cv2.putText(img, stat_text, (11, 50), font, 2.0, (0, 0, 0), 2, line)
-#     return img
-
 def refresh_stats(img):
-    global car, motorcycle, bus, truck  # global car, van, motorcycle, bus, truck
+    global car, motorcycle, bus, truck
     font = cv2.FONT_HERSHEY_PLAIN
     line = cv2.LINE_AA
     car_stats = 'car: {}'.format(car)
-    motorbike_stats= 'motorcycle: {}'.format(motorcycle)
-    bus_stats= 'bus: {}'.format(bus)
+    motorbike_stats = 'motorcycle: {}'.format(motorcycle)
+    bus_stats = 'bus: {}'.format(bus)
     truck_stats = 'truck: {}'.format(truck)
-    cv2.rectangle(img, (5,25), (260,145), (0,0,0), cv2.FILLED)
+    cv2.rectangle(img, (5, 25), (260, 145), (0, 0, 0), cv2.FILLED)
     cv2.putText(img, car_stats, (11, 50), font, 2.0, (255, 255, 255), 2, line)
     cv2.putText(img, motorbike_stats, (11, 80), font, 2.0, (255, 255, 255), 2, line)
     cv2.putText(img, bus_stats, (11, 110), font, 2.0, (255, 255, 255), 2, line)
@@ -80,7 +72,7 @@ def compute_color_for_labels(label):
 
 def draw_boxes(xcl, ycl, conf, img, name, bbox, identities=None, offset=(0, 0)):
     global all_objects
-    global car,motorcycle,bus,truck  # global car,van,motorcycle,bus,truck
+    global car, motorcycle, bus, truck  # global car,van,motorcycle,bus,truck
     for i, (box, xc, yc) in enumerate(zip(bbox, xcl, ycl)):
         x1, y1, x2, y2 = [int(i) for i in box]
         x1 += offset[0]
@@ -92,27 +84,26 @@ def draw_boxes(xcl, ycl, conf, img, name, bbox, identities=None, offset=(0, 0)):
         color = compute_color_for_labels(id)
         label = '{}{:d}'.format("", id)
         print("")
-        #print("For ID:", label, "The vehicle is:", name, "The center coordinate are (%d, %d)" % (xc, yc))
-
+        # print("For ID:", label, "The vehicle is:", name, "The center coordinate are (%d, %d)" % (xc, yc))
 
         dict_all_objects = dict(all_objects)
-        if label not in dict_all_objects and (cv2.pointPolygonTest(polygons[0], (xc,yc), False)>0):
-            all_objects.append([label,name])
-            if name=='car':
-                car+= 1
-            if name=='motorcycle':
-                motorcycle+=1
-            if name=='bus':
-                bus+= 1
-            if name=='truck':
-                truck+= 1
+        if label not in dict_all_objects and (cv2.pointPolygonTest(polygons[0], (xc, yc), False) > 0):
+            all_objects.append([label, name])
+            if name == 'car':
+                car += 1
+            if name == 'motorcycle':
+                motorcycle += 1
+            if name == 'bus':
+                bus += 1
+            if name == 'truck':
+                truck += 1
 
         # displaying bounding boxes & names
         cv2.rectangle(img, (x1, y1), (x2, y2), color, 3)
         # t_size = cv2.getTextSize(name, cv2.FONT_HERSHEY_PLAIN, 2, 2)[0]  # get size of name
         # t_size = cv2.getTextSize(name + "-" + label, cv2.FONT_HERSHEY_PLAIN, 2, 2)[0]  # get size of name+labels
         # cv2.rectangle(img, (x1, y1), (x1 + t_size[0] + 3, y1 + t_size[1] + 4), color, -1)
-        # cv2.putText(img, name + '' + label, (x1, y1 + t_size[1] + 4), cv2.FONT_HERSHEY_PLAIN, 2, [255, 255, 255], 2)
+        # cv2.putText(img, name, (x1, y1 + t_size[1] + 4), cv2.FONT_HERSHEY_PLAIN, 2, [255, 255, 255], 2)  # + '' + label
 
         cv2.circle(img, (xc, yc), 4, color, -1)
     return img
@@ -196,8 +187,8 @@ def detect(opt, save_img=False):
             s += '%gx%g ' % img.shape[2:]  # print string
             save_path = str(Path(out) / Path(p).name)
 
-            # cv2.line(im0, (0, 200), (640, 200), (0, 0, 255), 3)  # line to count number of vehicles
-            cv2.rectangle(im0, (1,200), (703,225), (0,0,255), 1)  # draw polygon where counting actually happens (live)
+            cv2.rectangle(im0, (1, 200), (703, 225), (0, 0, 255), 1)  # draw polygon where counting happens (live.mp4)
+            # cv2.rectangle(im0, (1, 300), (750, 335), (0, 0, 255), 2)  # draw polygon where counting (highway.mp4)
             print("The numbers for cars, motorbikes, bus and truck are: %d, %d, %d, %d" % (car, motorcycle, bus, truck))
             refresh_stats(im0)
 
@@ -237,7 +228,7 @@ def detect(opt, save_img=False):
                     identities = outputs[:, -1]
                     draw_boxes(x_cl, y_cl, conf, im0, names[int(c)], bbox_xyxy, identities)
 
-                    #print("This is x_cl and y_cl", x_cl, y_cl)
+                    # print("This is x_cl and y_cl", x_cl, y_cl)
 
                 # Write MOT compliant results to file
                 if save_txt and len(outputs) != 0:
@@ -255,17 +246,17 @@ def detect(opt, save_img=False):
                 deepsort.increment_ages()
 
             # Print time (inference + NMS)
-            #print('%sDone. (%.3fs)' % (s, t2 - t1))
+            # print('%sDone. (%.3fs)' % (s, t2 - t1))
             print('Done. (%.3fs)' % (t2 - t1))
-            if t2-t1 != 0:
-                fps = 1/(t2-t1)
+            if t2 - t1 != 0:
+                fps = 1 / (t2 - t1)
                 fps = "{:.2f}".format(fps)
                 show_fps(im0, fps)
 
             # Stream results
             if view_img:
                 cv2.imshow(p, im0)
-                #refresh_stats(im0)
+                # refresh_stats(im0)
                 if cv2.waitKey(1) == ord('q'):  # q to quit
                     raise StopIteration
 
