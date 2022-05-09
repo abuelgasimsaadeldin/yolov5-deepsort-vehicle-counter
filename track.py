@@ -1,7 +1,4 @@
 import sys
-
-sys.path.insert(0, './yolov5')
-
 from utils.datasets import LoadImages, LoadStreams
 from utils.general import check_img_size, non_max_suppression, scale_coords
 from utils.torch_utils import select_device, time_synchronized
@@ -17,8 +14,9 @@ import cv2
 import torch
 import torch.backends.cudnn as cudnn
 from utils.plots import show_fps
-
 import numpy as np
+
+sys.path.insert(0, './yolov5')
 
 polygons = [1]
 polygons[0] = np.array([[1, 200], [703, 200], [703, 225], [1, 225]])  # live.mp4
@@ -46,9 +44,6 @@ def refresh_stats(img):
     return img
 
 
-palette = (2 ** 11 - 1, 2 ** 15 - 1, 2 ** 20 - 1)
-
-
 def bbox_rel(*xyxy):
     """" Calculates the relative bounding box from absolute pixel values. """
     bbox_left = min([xyxy[0].item(), xyxy[2].item()])
@@ -62,6 +57,9 @@ def bbox_rel(*xyxy):
     return x_c, y_c, w, h
 
 
+palette = (2 ** 11 - 1, 2 ** 15 - 1, 2 ** 20 - 1)
+
+
 def compute_color_for_labels(label):
     """
     Simple function that adds fixed color depending on the class
@@ -72,7 +70,7 @@ def compute_color_for_labels(label):
 
 def draw_boxes(xcl, ycl, conf, img, name, bbox, identities=None, offset=(0, 0)):
     global all_objects
-    global car, motorcycle, bus, truck  # global car,van,motorcycle,bus,truck
+    global car, motorcycle, bus, truck
     for i, (box, xc, yc) in enumerate(zip(bbox, xcl, ycl)):
         x1, y1, x2, y2 = [int(i) for i in box]
         x1 += offset[0]
