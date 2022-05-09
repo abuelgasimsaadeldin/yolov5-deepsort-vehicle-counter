@@ -292,7 +292,7 @@ if __name__ == '__main__':
     parser.add_argument('--weights', type=str, default='yolov5s.pt', help='model.pt path')
     # file/folder, 0 for webcam
     parser.add_argument('--source', type=str, default='data/vehicle_test_images', help='source')
-    parser.add_argument('--output', type=str, default='runs/detect', help='output folder')  # output folder
+    parser.add_argument('--output', type=str, default='runs/result', help='output folder')  # output folder
     parser.add_argument('--img-size', type=int, default=640, help='inference size (pixels)')
     parser.add_argument('--conf-thres', type=float, default=0.45, help='object confidence threshold')
     parser.add_argument('--iou-thres', type=float, default=0.5, help='IOU threshold for NMS')
