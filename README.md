@@ -1,4 +1,4 @@
-## Vehicle Localization and Counting
+## Vehicle Detection, Tracking and Counting
 
 This system is able to detect and classify 4 different classes of vehicles including; *car*, *motorcycle*, *bus* and *truck* and count the number of vehicles in each classes as they pass through a virtual polygon area.
 
