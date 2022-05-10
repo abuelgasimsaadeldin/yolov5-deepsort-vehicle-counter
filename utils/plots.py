@@ -67,6 +67,16 @@ def plot_one_box(x, img, color=None, label=None, line_thickness=3):
         cv2.rectangle(img, c1, c2, color, -1, cv2.LINE_AA)  # filled
         cv2.putText(img, label, (c1[0], c1[1] - 2), 0, tl / 3, [225, 255, 255], thickness=tf, lineType=cv2.LINE_AA)
 
+        xc = x[0] + (x[2] - x[0]) / 2
+        yc = x[1] + (x[3] - x[1]) / 2
+
+        xc = int(xc)
+        yc = int(yc)
+
+        # cv2.circle(img, (xc, yc), 4, color, -1)
+
+        return xc, yc
+
 
 # def plot_counter(img, label, org):
 #     font = cv2.FONT_HERSHEY_SIMPLEX
