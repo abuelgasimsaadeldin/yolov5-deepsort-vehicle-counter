@@ -186,7 +186,7 @@ def parse_opt():
     parser.add_argument('--iou-thres', type=float, default=0.9, help='NMS IoU threshold')
     parser.add_argument('--device', default='', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
     parser.add_argument('--view-img', action='store_true', help='show results')
-    parser.add_argument('--classes', default=[0, 1, 2, 3], nargs='+', type=int, help='filter by class: coco = 2 3 5 7')
+    parser.add_argument('--classes', default=[0, 1, 2, 3], nargs='+', type=int, help='coco vehicle classes = 2,3,5,7')
     parser.add_argument('--agnostic-nms', action='store_true', help='class-agnostic NMS')
     parser.add_argument('--augment', action='store_true', help='augmented inference')
     parser.add_argument('--update', action='store_true', help='update all models')

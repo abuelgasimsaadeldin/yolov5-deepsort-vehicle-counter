@@ -26,7 +26,7 @@ from deepsort.utils.parser import get_config
 from deepsort.deep_sort import DeepSort
 
 polygons = [1]
-polygons[0] = np.array([[1, 200], [703, 200], [703, 225], [1, 225]])  # live.mp4
+polygons[0] = np.array([[1, 190], [703, 190], [703, 215], [1, 215]])  # live.mp4
 # polygons[0] = np.array([[1, 300], [800, 300], [800, 335], [1, 335]])  # highway.mp4
 all_objects = []
 car = 0
@@ -187,7 +187,7 @@ def detect(opt):
                     txt_file_name = p.parent.name  # get folder name containing current img
                     save_path = str(save_dir / p.parent.name)  # im.jpg, vid.mp4, ...
 
-            cv2.rectangle(im0, (1, 200), (703, 225), (0, 0, 255), 1)  # draw polygon where counting happens (live.mp4)
+            cv2.rectangle(im0, (1, 190), (703, 215), (0, 0, 255), 1)  # draw polygon where counting happens (live.mp4)
             # cv2.rectangle(im0, (1, 300), (750, 335), (0, 0, 255), 2)  # draw polygon where counting (highway.mp4)
             print("The numbers for cars, motorbikes, bus and truck are: %d, %d, %d, %d" % (car, motorcycle, bus, truck))
             refresh_stats(im0)
@@ -286,7 +286,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--weights', nargs='+', type=str, default='vehicles2.pt', help='model.pt path(s)')
     parser.add_argument('--deep_sort_model', type=str, default='osnet_ibn_x1_0_MSMT17')
-    parser.add_argument('--source', type=str, default='0', help='source')  # file/folder, 0 for webcam
+    parser.add_argument('--source', type=str, default='data/vehicle_test_videos/live.mp4', help='source')
     parser.add_argument('--imgsz', '--img', '--img-size', nargs='+', type=int, default=[640], help='inference size h,w')
     parser.add_argument('--conf-thres', type=float, default=0.9, help='object confidence threshold')
     parser.add_argument('--iou-thres', type=float, default=0.9, help='IOU threshold for NMS')
@@ -294,7 +294,7 @@ if __name__ == '__main__':
     parser.add_argument('--device', default='', help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
     parser.add_argument('--show-vid', default=True, action='store_true', help='display tracking video results')
     parser.add_argument('--save-vid', default=True, action='store_true', help='save video tracking results')
-    parser.add_argument('--classes', nargs='+', type=int, default=[0, 1, 2, 3], help='filter by class: coco = 2 3 5 7')
+    parser.add_argument('--classes', nargs='+', type=int, default=[0, 1, 2, 3], help='coco vehicle classes = 2,3,5,7')
     parser.add_argument('--agnostic-nms', action='store_true', help='class-agnostic NMS')
     parser.add_argument('--augment', action='store_true', help='augmented inference')
     parser.add_argument('--update', action='store_true', help='update all models')
