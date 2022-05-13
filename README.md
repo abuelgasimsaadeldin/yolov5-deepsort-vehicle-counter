@@ -35,6 +35,11 @@ $ ./OpenCV-4-5-5.sh
 $ pip install -r requirements.txt
 ```
 
+### 5) Download trained DeepSORT weights
+```bash
+$ gdown https://drive.google.com/file/d/1dhQ6GbbHBWkvrQxjED0W2YlT_l3Vdspn/view -O deepsort/deep_sort/deep/checkpoint/ckpt.t7
+```
+
 ## Run Inference
 *detect.py*: Detects vehicles present in each frame in a video and displays the results. (suitable for videos)   
 
