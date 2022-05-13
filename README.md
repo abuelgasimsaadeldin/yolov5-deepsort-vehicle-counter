@@ -45,7 +45,7 @@ $ python detect.py --source data/vehicle_test_videos/live.mp4
 *count.py*: Detects and counts the number of vehicles present in an images and displays the results. (suitable for images)   
 
 ```bash
-$ python count.py --source data/vehicle_test_images/* 
+$ python count.py --source data/vehicle_test_images/   
 ```
 
 *track.py*: Detects, tracks and counts the number of vehicles as they cross through a virtual polygon area. (suitable for videos)

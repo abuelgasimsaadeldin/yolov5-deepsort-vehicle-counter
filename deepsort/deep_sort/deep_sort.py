@@ -1,56 +1,88 @@
 import numpy as np
 import torch
+import sys
+import gdown
+from os.path import exists as file_exists, join
 
-from .deep.feature_extractor import Extractor
 from .sort.nn_matching import NearestNeighborDistanceMetric
-from .sort.preprocessing import non_max_suppression
 from .sort.detection import Detection
 from .sort.tracker import Tracker
+from .deep.reid_model_factory import show_downloadeable_models, get_model_link, is_model_in_factory, \
+    is_model_type_in_model_path, get_model_type, show_supported_models
 
+sys.path.append('deepsort/deep_sort/deep/reid')
+from torchreid.utils import FeatureExtractor
+from torchreid.utils.tools import download_url
+
+show_downloadeable_models()
 
 __all__ = ['DeepSort']
 
 
 class DeepSort(object):
-    def __init__(self, model_path, max_dist=0.2, min_confidence=0.3, nms_max_overlap=1.0, max_iou_distance=0.7, max_age=70, n_init=3, nn_budget=100, use_cuda=True):
-        self.min_confidence = min_confidence
-        self.nms_max_overlap = nms_max_overlap
+    def __init__(self, model, device, max_dist=0.2, max_iou_distance=0.7, max_age=70, n_init=3, nn_budget=100):
+        # models trained on: market1501, dukemtmcreid and msmt17
+        if is_model_in_factory(model):
+            # download the model
+            model_path = join('deepsort/deep_sort/deep/checkpoint', model + '.pth')
+            if not file_exists(model_path):
+                gdown.download(get_model_link(model), model_path, quiet=False)
 
-        self.extractor = Extractor(model_path, use_cuda=use_cuda)
+            self.extractor = FeatureExtractor(
+                # get rid of dataset information DeepSort model name
+                model_name=model.rsplit('_', 1)[:-1][0],
+                model_path=model_path,
+                device=str(device)
+            )
+        else:
+            if is_model_type_in_model_path(model):
+                model_name = get_model_type(model)
+                self.extractor = FeatureExtractor(
+                    model_name=model_name,
+                    model_path=model,
+                    device=str(device)
+                )
+            else:
+                print('Cannot infere model name from provided DeepSort path, should be one of the following:')
+                show_supported_models()
+                exit()
 
         max_cosine_distance = max_dist
         metric = NearestNeighborDistanceMetric(
-            "cosine", max_cosine_distance, nn_budget)
+            "euclidean", max_cosine_distance, nn_budget)
         self.tracker = Tracker(
             metric, max_iou_distance=max_iou_distance, max_age=max_age, n_init=n_init)
 
-    def update(self, bbox_xywh, confidences, ori_img):
+    def update(self, bbox_xywh, confidences, classes, ori_img, use_yolo_preds=False):
         self.height, self.width = ori_img.shape[:2]
         # generate detections
         features = self._get_features(bbox_xywh, ori_img)
         bbox_tlwh = self._xywh_to_tlwh(bbox_xywh)
         detections = [Detection(bbox_tlwh[i], conf, features[i]) for i, conf in enumerate(
-            confidences) if conf > self.min_confidence]
+            confidences)]
 
         # run on non-maximum supression
         boxes = np.array([d.tlwh for d in detections])
         scores = np.array([d.confidence for d in detections])
-        indices = non_max_suppression(boxes, self.nms_max_overlap, scores)
-        detections = [detections[i] for i in indices]
 
         # update tracker
         self.tracker.predict()
-        self.tracker.update(detections)
+        self.tracker.update(detections, classes)
 
         # output bbox identities
         outputs = []
         for track in self.tracker.tracks:
             if not track.is_confirmed() or track.time_since_update > 1:
                 continue
-            box = track.to_tlwh()
-            x1, y1, x2, y2 = self._tlwh_to_xyxy(box)
+            if use_yolo_preds:
+                det = track.get_yolo_pred()
+                x1, y1, x2, y2 = self._tlwh_to_xyxy(det.tlwh)
+            else:
+                box = track.to_tlwh()
+                x1, y1, x2, y2 = self._tlwh_to_xyxy(box)
             track_id = track.track_id
-            outputs.append(np.array([x1, y1, x2, y2, track_id], dtype=np.int))
+            class_id = track.class_id
+            outputs.append(np.array([x1, y1, x2, y2, track_id, class_id], dtype=np.int))
         if len(outputs) > 0:
             outputs = np.stack(outputs, axis=0)
         return outputs

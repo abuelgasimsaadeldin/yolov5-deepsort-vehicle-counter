@@ -1,5 +1,7 @@
 # Byte-compiled / optimized / DLL files
 runs/result/*
+runs/result-detect/*
+runs/result-count/*
 __pycache__/
 *.py[cod]
 *$py.class
