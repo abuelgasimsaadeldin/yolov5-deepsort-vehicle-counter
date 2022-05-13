@@ -37,7 +37,7 @@ $ pip install -r requirements.txt
 
 ### 5) Download trained DeepSORT weights
 ```bash
-$ gdown https://drive.google.com/file/d/1dhQ6GbbHBWkvrQxjED0W2YlT_l3Vdspn/view -O deepsort/deep_sort/deep/checkpoint/ckpt.t7
+$ gdown https://drive.google.com/uc?id=1dhQ6GbbHBWkvrQxjED0W2YlT_l3Vdspn -O deepsort/deep_sort/deep/checkpoint/ckpt.t7
 ```
 
 ## Run Inference
