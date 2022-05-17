@@ -1,3 +1,4 @@
+path: .
 train: train/images
 val: valid/images
 test: test/images
