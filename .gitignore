@@ -1,4 +1,8 @@
 # Byte-compiled / optimized / DLL files
+train/*
+valid/*
+test/*
+runs/val/*
 runs/result/*
 runs/result-detect/*
 runs/result-count/*
