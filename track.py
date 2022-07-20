@@ -28,6 +28,7 @@ from deepsort.deep_sort import DeepSort
 polygons = [1]
 polygons[0] = np.array([[1, 190], [703, 190], [703, 215], [1, 215]])  # live.mp4
 # polygons[0] = np.array([[1, 300], [800, 300], [800, 335], [1, 335]])  # highway.mp4
+# polygons[0] = np.array([[10, 290], [1200, 290], [1200, 330], [10, 330]])  # traffic.mp4
 all_objects = []
 car = 0
 motorcycle = 0
@@ -189,6 +190,7 @@ def detect(opt):
 
             cv2.rectangle(im0, (1, 190), (703, 215), (0, 0, 255), 1)  # draw polygon where counting happens (live.mp4)
             # cv2.rectangle(im0, (1, 300), (750, 335), (0, 0, 255), 2)  # draw polygon where counting (highway.mp4)
+            # cv2.rectangle(im0, (10, 290), (1200, 330), (0, 0, 255), 1)  # draw polygon where counting happens (traffic.mp4)
             print("The numbers for cars, motorbikes, bus and truck are: %d, %d, %d, %d" % (car, motorcycle, bus, truck))
             refresh_stats(im0)
 
